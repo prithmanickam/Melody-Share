@@ -1,0 +1,510 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <script src="{% static 'main/js/script.js' %}"></script>   
+</head>
+
+<body>
+  <div class="piano">
+    <button class="white-key C4-key"></button>
+    <button class="black-key Db4-key"></button>
+    <button class="white-key D4-key"></button>
+    <button class="black-key Eb4-key"></button>
+    <button class="white-key E4-key"></button>
+    <button class="white-key F4-key"></button>
+    <button class="black-key Gb4-key"></button>
+    <button class="white-key G4-key"></button>
+    <button class="black-key Ab4-key"></button>
+    <button class="white-key A4-key"></button>
+    <button class="black-key Bb4-key"></button>
+    <button class="white-key B4-key"></button>
+    <button class="white-key C5-key"></button>
+    <button class="black-key Db5-key"></button>
+    <button class="white-key D5-key"></button>
+    <button class="black-key Eb5-key"></button>
+    <button class="white-key E5-key"></button>
+  </div> 
+</body>
+
+<div style="position: absolute; left: 480px; top: 100px;"> 
+<button class="button crash" id="crash"></button>
+<button class="button openHiHat" id="openHiHat"></button>
+<button class="button closedHiHat" id="closedHiHat"></button>
+
+</div>
+
+<div style="position: absolute; left: 480px; top: 217px;"> 
+<button class="button clap" id="clap"></button>
+<button class="button kick" id="kick"></button>
+<button class="button snare" id="snare"></button>
+</div>
+
+
+<div style="position: absolute; left: 850px; top: 310px;"> 
+  <button class="smallButton play" id="play"></button>
+  
+  <button class="smallButton pause" id="pause"></button> 
+  
+</div>
+  
+<div style="position: absolute; left: 100px; top: 430px;"> 
+  
+  <button class="smallButton deleteLastTrack" id="del"></button> 
+
+</div>
+
+<div style="position: absolute; left: 100px; top: 510px;"> 
+  <h2 style="color:white; font-family:Arial; font-size: 20px;"> Your Tracks: </h2>
+  <p id="ok"></p>
+</div>
+
+<div style="position: absolute; left: 100px; top: 110px;"> 
+  <button class="helpButton" onclick="help()"></button> 
+
+  <h2 id="helpText" style="color:white; font-family:Arial; font-size: 11px;">  </h2>
+  
+</div>
+
+<style>
+  
+  
+  .crash{
+    background: url("{% static '/main/images/crash.png' %}");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  
+  .openHiHat{
+    background: url("{% static '/main/images/openHiHat.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  
+  .closedHiHat{
+    background: url("{% static 'main/images/closedHiHat.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .clap{
+    background: url("{% static 'main/images/clap.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .kick{
+    background: url("{% static 'main/images/kick.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .snare{
+    background: url("{% static 'main/images/snare.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .helpButton {
+    background: url("{% static '/main/images/helpButton.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    display: inline-block;
+    padding: 15px 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px #999;
+  
+  }
+  
+  .helpButton:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+  
+  .play{
+    background: url("{% static 'main/images/record.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .pause{
+    background: url("{% static 'main/images/stop.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .deleteLastTrack{
+    background: url("{% static 'main/images/deleteLastTrack.png' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+
+ 
+</style>
+
+<script>
+
+//piano and drum functions
+const btn = document.getElementById("crash");
+btn.onclick = () => {
+const crash = new Audio("{% static 'main/sounds/crash.wav' %}");
+crash.play();
+};
+
+const btn2 = document.getElementById("openHiHat");
+btn2.onclick = () => {
+const openHiHat = new Audio("{% static 'main/sounds/openHiHat.wav' %}");
+openHiHat.play();
+};
+
+const btn3 = document.getElementById("closedHiHat");
+btn3.onclick = () => {
+const closedHiHat = new Audio("{% static 'main/sounds/closedHiHat.wav' %}");
+closedHiHat.play();
+};
+
+const btn4 = document.getElementById("clap");
+btn4.onclick = () => {
+const clap = new Audio("{% static 'main/sounds/clap.mp3' %}");
+clap.play();
+};
+
+const btn5 = document.getElementById("kick");
+btn5.onclick = () => {
+const kick = new Audio("{% static 'main/sounds/kick.wav' %}");
+kick.play();
+};
+
+const btn6 = document.getElementById("snare");
+btn6.onclick = () => {
+const snare = new Audio("{% static 'main/sounds/snare.wav' %}");
+snare.play();
+};
+
+  
+window.addEventListener("keydown", ({ keyCode }) => {
+  
+const C4 = new Audio("{% static 'main/sounds/C4.mp3' %}");
+const Db4 = new Audio("{% static 'main/sounds/Db4.mp3' %}");
+const D4 = new Audio("{% static 'main/sounds/D4.mp3' %}");
+const Eb4 = new Audio("{% static 'main/sounds/Eb4.mp3' %}");
+const E4 = new Audio("{% static 'main/sounds/E4.mp3' %}");
+const F4 = new Audio("{% static 'main/sounds/F4.mp3' %}");
+const Gb4 = new Audio("{% static 'main/sounds/Gb4.mp3' %}");
+const G4 = new Audio("{% static 'main/sounds/G4.mp3' %}");
+const Ab4 = new Audio("{% static 'main/sounds/Ab4.mp3' %}");
+const A4 = new Audio("{% static 'main/sounds/A4.mp3' %}");
+const Bb4 = new Audio("{% static 'main/sounds/Bb4.mp3' %}");
+const B4 = new Audio("{% static 'main/sounds/B4.mp3' %}");
+const C5 = new Audio("{% static 'main/sounds/C5.mp3' %}");
+const Db5 = new Audio("{% static 'main/sounds/Db5.mp3' %}");
+const D5 = new Audio("{% static 'main/sounds/D5.mp3' %}");
+const Eb5 = new Audio("{% static 'main/sounds/Eb5.mp3' %}");
+const E5 = new Audio("{% static 'main/sounds/E5.mp3' %}");
+
+const openHiHat = new Audio("{% static 'main/sounds/openHiHat.wav' %}");
+const closedHiHat = new Audio("{% static 'main/sounds/closedHiHat.wav' %}");
+const crash = new Audio("{% static 'main/sounds/crash.wav' %}");
+const snare = new Audio("{% static 'main/sounds/snare.wav' %}");
+const kick = new Audio("{% static 'main/sounds/kick.wav' %}");
+const clap = new Audio("{% static 'main/sounds/clap.mp3' %}");
+  
+const playSound = audio => {
+  const clone = audio.cloneNode();
+  clone.play();
+  setTimeout(() => (clone.volume = 0.8), 400);
+  setTimeout(() => (clone.volume = 0.6), 800);
+  setTimeout(() => (clone.volume = 0.4), 1200);
+  setTimeout(() => (clone.volume = 0.2), 1600);
+  setTimeout(() => (clone.volume = 0), 2000);
+  };
+
+
+  // C4
+  const C4Key = document.querySelector(".C4-key");
+  const playC4 = () => {
+  playSound(C4);
+  C4Key.classList.add("active");
+  setTimeout(() => C4Key.classList.remove("active"), 200);
+  };
+  C4Key.addEventListener("click", playC4);
+  
+  // Db4
+  const Db4Key = document.querySelector(".Db4-key");
+  const playDb4 = () => {
+  playSound(Db4);
+  Db4Key.classList.add("active");
+  setTimeout(() => Db4Key.classList.remove("active"), 200);
+  };
+  Db4Key.addEventListener("click", playDb4);
+  
+  // D4
+  const D4Key = document.querySelector(".D4-key");
+  const playD4 = () => {
+  playSound(D4);
+  D4Key.classList.add("active");
+  setTimeout(() => D4Key.classList.remove("active"), 200);
+  };
+  D4Key.addEventListener("click", playD4);
+  
+  // Eb4
+  const Eb4Key = document.querySelector(".Eb4-key");
+  const playEb4 = () => {
+  playSound(Eb4);
+  Eb4Key.classList.add("active");
+  setTimeout(() => Eb4Key.classList.remove("active"), 200);
+  };
+  Eb4Key.addEventListener("click", playEb4);
+  
+  // E4
+  const E4Key = document.querySelector(".E4-key");
+  const playE4 = () => {
+  playSound(E4);
+  E4Key.classList.add("active");
+  setTimeout(() => E4Key.classList.remove("active"), 200);
+  };
+  E4Key.addEventListener("click", playE4);
+  
+  // F4
+  const F4Key = document.querySelector(".F4-key");
+  const playF4 = () => {
+  playSound(F4);
+  F4Key.classList.add("active");
+  setTimeout(() => F4Key.classList.remove("active"), 200);
+  };
+  F4Key.addEventListener("click", playF4);
+  
+  // Gb4
+  const Gb4Key = document.querySelector(".Gb4-key");
+  const playGb4 = () => {
+  playSound(Gb4);
+  Gb4Key.classList.add("active");
+  setTimeout(() => Gb4Key.classList.remove("active"), 200);
+  };
+  Gb4Key.addEventListener("click", playGb4);
+  
+  // G4
+  const G4Key = document.querySelector(".G4-key");
+  const playG4 = () => {
+  playSound(G4);
+  G4Key.classList.add("active");
+  setTimeout(() => G4Key.classList.remove("active"), 200);
+  };
+  G4Key.addEventListener("click", playG4);
+  
+  // Ab4
+  const Ab4Key = document.querySelector(".Ab4-key");
+  const playAb4 = () => {
+  playSound(Ab4);
+  Ab4Key.classList.add("active");
+  setTimeout(() => Ab4Key.classList.remove("active"), 200);
+  };
+  Ab4Key.addEventListener("click", playAb4);
+  
+  // A4
+  const A4Key = document.querySelector(".A4-key");
+  const playA4 = () => {
+  playSound(A4);
+  A4Key.classList.add("active");
+  setTimeout(() => A4Key.classList.remove("active"), 200);
+  };
+  A4Key.addEventListener("click", playA4);
+  
+  // Bb4
+  const Bb4Key = document.querySelector(".Bb4-key");
+  const playBb4 = () => {
+  playSound(Bb4);
+  Bb4Key.classList.add("active");
+  setTimeout(() => Bb4Key.classList.remove("active"), 200);
+  };
+  Bb4Key.addEventListener("click", playBb4);
+  
+  // B4
+  const B4Key = document.querySelector(".B4-key");
+  const playB4 = () => {
+  playSound(B4);
+  B4Key.classList.add("active");
+  setTimeout(() => B4Key.classList.remove("active"), 200);
+  };
+  B4Key.addEventListener("click", playB4);
+  
+  // C5
+  const C5Key = document.querySelector(".C5-key");
+  const playC5 = () => {
+  playSound(C5);
+  C5Key.classList.add("active");
+  setTimeout(() => C5Key.classList.remove("active"), 200);
+  };
+  C5Key.addEventListener("click", playC5);
+  
+  // Db5
+  const Db5Key = document.querySelector(".Db5-key");
+  const playDb5 = () => {
+  playSound(Db5);
+  Db5Key.classList.add("active");
+  setTimeout(() => Db5Key.classList.remove("active"), 200);
+  };
+  Db5Key.addEventListener("click", playDb5);
+  
+  // D5
+  const D5Key = document.querySelector(".D5-key");
+  const playD5 = () => {
+  playSound(D5);
+  D5Key.classList.add("active");
+  setTimeout(() => D5Key.classList.remove("active"), 200);
+  };
+  D5Key.addEventListener("click", playD5);
+  
+  // Eb5
+  const Eb5Key = document.querySelector(".Eb5-key");
+  const playEb5 = () => {
+  playSound(Eb5);
+  Eb5Key.classList.add("active");
+  setTimeout(() => Eb5Key.classList.remove("active"), 200);
+  };
+  Eb5Key.addEventListener("click", playEb5);
+  
+  
+  // E5
+  const E5Key = document.querySelector(".E5-key");
+  const playE5 = () => {
+  playSound(E5);
+  E5Key.classList.add("active");
+  setTimeout(() => E5Key.classList.remove("active"), 200);
+  };
+  E5Key.addEventListener("click", playE5);
+
+  // Press Q
+  if (keyCode === 81) return playC4();
+  
+  // Press 2
+  if (keyCode === 50) return playDb4();
+  
+  // Press W
+  if (keyCode === 87) return playD4();
+  
+  // Press 3
+  if (keyCode === 51) return playEb4();
+  
+  // Press E
+  if (keyCode === 69) return playE4();
+  
+  // Press R
+  if (keyCode === 82) return playF4();
+  
+  // Press 5
+  if (keyCode === 53) return playGb4();
+  
+  // Press T
+  if (keyCode === 84) return playG4();
+  
+  // Press 6
+  if (keyCode === 54) return playAb4();
+  
+  // Press Y
+  if (keyCode === 89) return playA4();
+  
+  // Press 7
+  if (keyCode === 55) return playBb4();
+  
+  // Press U
+  if (keyCode === 85) return playB4();
+  
+  // Press I
+  if (keyCode === 73) return playC5();
+  
+  // Press 9
+  if (keyCode === 57) return playDb5();
+  
+  // Press O
+  if (keyCode === 79) return playD5();
+  
+  // Press 0 
+  if (keyCode === 48) return playEb5();
+  
+  // Press P
+  if (keyCode === 80) return playE5();
+  
+  
+  // Press H
+  if (keyCode === 72) return openHiHat.play();
+  
+  // Press J
+  if (keyCode === 74) return closedHiHat.play();
+  
+  // Press G
+  if (keyCode === 71) return crash.play();
+  
+  // Press V
+  if (keyCode === 86) return clap.play();
+  
+  // Press B
+  if (keyCode === 66) return kick.play();
+  
+  // Press N
+  if (keyCode === 78) return snare.play();
+
+
+}); 
+
+
+//recorder function
+play.onclick = () =>{
+  
+  if (ok.hasChildNodes()){
+    for(var child=ok.firstChild; child!==null; child=child.nextSibling) {
+      child.play();
+    }
+  } 
+  
+  navigator.mediaDevices.getUserMedia({audio:true})
+  .then(stream => {
+    mediaRecorder = new MediaRecorder(stream)
+    mediaRecorder.start()
+    chuck = []
+    
+    mediaRecorder.addEventListener("dataavailable", e =>{
+      chuck.push(e.data)
+    })
+
+    mediaRecorder.addEventListener("stop", e =>{
+      blob = new Blob(chuck, {'type': 'audio/mp3'});
+      audio_url = URL.createObjectURL(blob)
+      audio = new Audio(audio_url)
+      audio.setAttribute("controls",1)
+      ok.appendChild(audio)
+
+    })
+  })
+}
+
+pause.onclick = () =>{
+  mediaRecorder.stop()
+}
+
+del.onclick = () =>{
+var select = document.getElementById('ok');
+select.removeChild(select.lastChild);
+}
+
+document.getElementById("form").addEventListener("submit", callme);
+        function callme(event) {
+            event.preventDefault();
+            let val = document.getElementById('input');
+            localStorage.setItem('input', val.value);
+            //window.location.href = "profile";
+  };
+
+</script>
+
+
+
+{% endblock content %}
+
