@@ -12,6 +12,8 @@ urlpatterns = [
     path('login/', auth_view.LoginView.as_view(template_name='main/login.html'), name="login"),
     path('logout/', auth_view.LogoutView.as_view(template_name='main/logout.html'), name="logout"),
     path('profile/', views.profile, name='profile'),
+    path('profile/upload/', views.upload_music, name='upload_music'),
+    path('profile/<int:pk>/', views.delete_music, name='delete_music'),
 ]
 
 if settings.DEBUG:

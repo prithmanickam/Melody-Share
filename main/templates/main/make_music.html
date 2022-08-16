@@ -432,7 +432,6 @@ const playSound = audio => {
   // Press P
   if (keyCode === 80) return playE5();
   
-  
   // Press H
   if (keyCode === 72) return openHiHat.play();
   
@@ -494,17 +493,6 @@ var select = document.getElementById('ok');
 select.removeChild(select.lastChild);
 }
 
-document.getElementById("form").addEventListener("submit", callme);
-        function callme(event) {
-            event.preventDefault();
-            let val = document.getElementById('input');
-            localStorage.setItem('input', val.value);
-            //window.location.href = "profile";
-  };
-
 </script>
 
-
-
 {% endblock content %}
-

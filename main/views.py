@@ -41,9 +41,30 @@ def make_music(request):
 
 
 def profile(request):
-    return render(request, 'main/profile.html')
+    songs = Song.objects.all()
+    return render(request, 'main/profile.html', {
+        'songs': songs
+    })
 
 
+def upload_music(request):
+    if request.method == 'POST':
+        form = SongForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = SongForm()
+    return render(request, 'main/upload_music.html', {
+        'form': form
+    })
+
+
+def delete_music(request, pk):
+    if request.method == 'POST':
+        song = Song.objects.get(pk=pk)
+        song.delete()
+    return redirect('profile')
 
 #@login_required()
 

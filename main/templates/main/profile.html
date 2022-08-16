@@ -7,8 +7,57 @@
   {% block content_header %}
     
     <h2 style="color:white; font-family:Arial">Hello, {{user.username}}!</h2>
-    
+    <p>
+      <a href="{% url 'upload_music' %}" class="btn btn-primary">Upload Your Music</a>
+    </p>
   {% endblock %}
 </div>
 
+<style>
+.table{
+  color:white
+}
+</style>
+
+<div style="position: absolute; left: 400px; top: 300px;"> 
+
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Download</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for song in songs %}
+        <tr>
+          <td>
+            {% if song.cover %}
+              <img src="{{ song.cover.url }}" alt="{{ song.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ song.title }}</td>
+          <td>{{ song.description }}</td>
+          <td>
+            <a href="{{ song.music.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Download Music
+            </a>
+          </td>
+          <td>
+            <form method="post" action="{% url 'delete_music' song.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
