@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="position: absolute; left: 570px; top: 150px;"> 
+
+  {% block content_header %}
+    
+    <h2 style="color:white; font-family:Arial">View music, {{user.username}}!</h2>
+    
+  {% endblock %}
+</div>
+
+<style>
+.table{
+  color:white
+}
+</style>
+
+<div style="position: absolute; left: 400px; top: 300px;"> 
+
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Description</th>
+        <th>Listen to Song</th>
+        <th>Likes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for song in songs %}
+        <tr>
+          <td>
+            {% if song.cover %}
+              <img src="{{ song.cover.url }}" alt="{{ song.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ song.title }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ song.description }}</td>
+          <td>
+            <a href="{{ song.music.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Listen
+            </a>
+          </td>
+          <td>
+            <form method="post" action="{% url 'like_music' song.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Like</button>
+              {{song.likes}}
+            </form>
+          </td>
+          
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

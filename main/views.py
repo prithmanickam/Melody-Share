@@ -46,6 +46,13 @@ def profile(request):
         'songs': songs
     })
 
+def view_music(request):
+    songs = Song.objects.all()
+    return render(request, 'main/view_music.html', {
+        'songs': songs
+    })
+
+
 
 def upload_music(request):
     if request.method == 'POST':
@@ -65,6 +72,14 @@ def delete_music(request, pk):
         song = Song.objects.get(pk=pk)
         song.delete()
     return redirect('profile')
+
+
+def like_music(request, pk):
+    if request.method == 'POST':
+        song = Song.objects.get(pk=pk)
+        song.like()
+        song.save()
+    return redirect('view_music')
 
 #@login_required()
 
