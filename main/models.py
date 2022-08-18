@@ -11,6 +11,7 @@ class Song(models.Model):
     music = models.FileField(upload_to='music/songs/')
     cover = models.ImageField(upload_to='music/covers/', null=True, blank=True)
     likes = models.IntegerField(default=0)
+    published = models.BooleanField(default = False)
 
     def __str__(self):
         return self.title
@@ -22,4 +23,7 @@ class Song(models.Model):
     
     def like(self):
         self.likes += 1 
+
+    def publish(self):
+        self.published = True
 

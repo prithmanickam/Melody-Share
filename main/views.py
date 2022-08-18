@@ -18,7 +18,6 @@ from django.conf import settings
 def home(request):
     return render(request, 'main/home.html')
 
-
 def register(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
@@ -32,6 +31,7 @@ def register(request):
 
     return render(request, 'main/register.html', {'form': form})
 
+
 def make_music(request):
     context = {}
     if request.method == 'POST':
@@ -40,22 +40,22 @@ def make_music(request):
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
     return render(request, 'main/make_music.html', context)
-
-
+    
+@login_required()
 def profile(request):
     songs = Song.objects.all()
     return render(request, 'main/profile.html', {
         'songs': songs
     })
 
+
 def view_music(request):
-    songs = Song.objects.all()
+    songs = Song.objects.filter(published = True)
     return render(request, 'main/view_music.html', {
         'songs': songs
     })
 
-
-
+@login_required()
 def upload_music(request):
     if request.method == 'POST':
         form = SongForm(request.POST, request.FILES)
@@ -68,7 +68,15 @@ def upload_music(request):
         'form': form
     })
 
+@login_required()
+def publish_music(request, pk):
+    if request.method == 'POST':
+        song = Song.objects.get(pk=pk)
+        song.publish()
+        song.save()
+    return redirect('profile')
 
+@login_required()
 def delete_music(request, pk):
     if request.method == 'POST':
         song = Song.objects.get(pk=pk)
@@ -83,9 +91,9 @@ def like_music(request, pk):
         song.save()
     return redirect('view_music')
 
-
+@login_required()
 def share(request):
-    songs = Song.objects.all()
+    songs = Song.objects.filter(published = True)
     print(request.POST.get('content'))
     
     if request.method == 'POST':
@@ -104,4 +112,9 @@ def share(request):
         'songs': songs
     })
 
+
+def contact(request):
+    return render(request, 'main/contact.html')
+
 #@login_required()
+

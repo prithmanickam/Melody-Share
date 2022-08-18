@@ -19,7 +19,7 @@
 }
 </style>
 
-<div style="position: absolute; left: 400px; top: 300px;"> 
+<div style="position: absolute; left: 300px; top: 270px;"> 
 
 
   <table class="table mb-0">
@@ -28,7 +28,8 @@
         <th>Cover</th>
         <th>Title</th>
         <th>Description</th>
-        <th>Download</th>
+        <th>Listen to Music</th>
+        <th>Publish</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -46,8 +47,14 @@
           <td>{{ song.description }}</td>
           <td>
             <a href="{{ song.music.url }}" class="btn btn-primary btn-sm" target="_blank">
-              Download Music
+              Listen
             </a>
+          </td>
+          <td>
+            <form method="post" action="{% url 'publish_music' song.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-sm">Publish</button>
+            </form>
           </td>
           <td>
             <form method="post" action="{% url 'delete_music' song.pk %}">
