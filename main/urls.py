@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile/<int:pk>/', views.delete_music, name='delete_music'),
     path('view_music/', views.view_music, name='view_music'),
     path('view_music/<int:pk>/', views.like_music, name='like_music'),
-
+    path('share/', views.share, name='share'),
 ]
 
 if settings.DEBUG:

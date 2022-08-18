@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 
 from .forms import SongForm
 from .models import Song
+import tweepy
+from django.conf import settings
 
 def home(request):
     return render(request, 'main/home.html')
@@ -81,5 +83,25 @@ def like_music(request, pk):
         song.save()
     return redirect('view_music')
 
-#@login_required()
 
+def share(request):
+    songs = Song.objects.all()
+    print(request.POST.get('content'))
+    
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        content = 'Check out my song on MelodyShare: http://127.0.0.1:8000' + content
+        
+        if content:
+            print('Content:', content)
+            auth = tweepy.OAuthHandler(settings.API_KEY, settings.API_KEY_SECRET )
+            auth.set_access_token(settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
+            api = tweepy.API(auth)
+            api.update_status(content)
+            return redirect('share')
+
+    return render(request,'main/share.html', {
+        'songs': songs
+    })
+
+#@login_required()

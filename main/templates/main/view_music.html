@@ -2,11 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div style="position: absolute; left: 570px; top: 150px;"> 
+<div style="position: absolute; left: 400px; top: 150px;"> 
 
   {% block content_header %}
     
-    <h2 style="color:white; font-family:Arial">View music, {{user.username}}!</h2>
+    <h2 style="color:white; font-family:Arial">View all users published music, {{user.username}}!</h2>
     
   {% endblock %}
 </div>
@@ -17,7 +17,7 @@
 }
 </style>
 
-<div style="position: absolute; left: 400px; top: 300px;"> 
+<div style="position: absolute; left: 320px; top: 250px;"> 
 
 
   <table class="table mb-0">
@@ -52,8 +52,8 @@
           <td>
             <form method="post" action="{% url 'like_music' song.pk %}">
               {% csrf_token %}
-              <button type="submit" class="btn btn-danger btn-sm">Like</button>
               {{song.likes}}
+              <button type="submit" class="btn btn-danger btn-sm">Like</button>
             </form>
           </td>
           
