@@ -2,23 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div style="position: absolute; left: 400px; top: 150px;"> 
+
+<div style = "position:relative; top:120px; text-align: center;>
 
   {% block content_header %}
-    
-    <h2 style="color:white; font-family:Arial">View all users published music, {{user.username}}!</h2>
-    
+    <h2 style="color:white;"></h2>
+    <h2 style="color:white;">View all users published music, {{user.username}}!</h2>
   {% endblock %}
-</div>
+
 
 <style>
 .table{
   color:white
 }
 </style>
-
-<div style="position: absolute; left: 320px; top: 250px;"> 
-
 
   <table class="table mb-0">
     <thead>

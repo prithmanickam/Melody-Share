@@ -1,12 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
+<div style = "position:relative; text-align: center;>
     <div class="container" >      
-      <div id="header-text" style="position: absolute; left: 445px; top: 20px; ; text-align: center">
+      <div id="header-text" style="position: absolute; left: 445px; top: 20px; text-align: center;">
         <img src="{% static 'main/images/melodyShareLogoWhite.png' %}" width="304" height="160"alt="" ></a>
         <h1 id="header-h1"> </h1>
         <p id="header-paragraph">Your destination to create and share music. <br> View the options in the navigation bar above. <br> <br> <br> by Prith Manickam</p>
         <a class="btn" href="{% url 'make_music' %}" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Start making Music</a>
       </div>
     </div>
+  </div>
 {% endblock content %}

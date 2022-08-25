@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="position: absolute; left: 570px; top: 150px;"> 
+
+  {% block content_header %}
+    
+    <h2 style="color:white; font-family:Arial">Hello, {{user.username}}!</h2>
+    <p>
+      <a href="{% url 'upload_music' %}" class="btn btn-primary">Publishing Your Music</a>
+    </p>
+  {% endblock %}
+{% endblock %}

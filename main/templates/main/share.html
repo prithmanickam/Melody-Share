@@ -3,23 +3,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div style="position: absolute; left: 370px; top: 150px;"> 
+  <div style = "position:relative; top:120px; text-align: center;>
 
   {% block content_header %}
-    
-    <h2 style="color:white; font-family:Arial">Share your published music via Twitter, {{user.username}}!</h2>
-    
+    <h2 style="color:white;"></h2>
+    <h2 style="color:white;">Share your published music via Twitter, {{user.username}}!</h2>
   {% endblock %}
-</div>
 
 <style>
 .table{
   color:white
 }
 </style>
-
-<div style="position: absolute; left: 400px; top: 250px;"> 
-
 
   <table class="table mb-0">
     <thead>
